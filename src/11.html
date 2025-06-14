@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StepCraft – Projects</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<style>
+/* RESET  & 基础变量  */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0f6fb;
+  --white:#fff;
+  --grey:#7d8795;
+  --grey-light:#cfd6e0;
+  --primary:#243046;
+  --radius:8px;
+  --sidebar-w:240px;
+  --detail-w:260px;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+body{background:var(--bg);color:var(--primary);}
+
+/* 布局 */
+#app{
+  min-height:100vh;
+  display:flex;
+  flex-direction:row;
+}
+.sidebar{
+  width:var(--sidebar-w);
+  padding:24px 12px;
+  display:flex;flex-direction:column;
+  gap:32px;
+  background:var(--white);
+  border-right:1px solid var(--grey-light);
+  transition:.3s;
+}
+.sidebar h1{font-size:24px;}
+.nav ul{display:flex;flex-direction:column;gap:8px;}
+.nav li{list-style:none;}
+.nav a{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:var(--radius);
+  color:var(--primary);text-decoration:none;font-size:15px;
+  transition:.2s;
+}
+.nav a.active,.nav a:hover{background:var(--bg);}
+.nav i{font-size:18px;width:18px;text-align:center;}
+
+/* 主内容 */
+main.content{
+  flex:1;padding:32px 32px 64px;
+  display:flex;flex-direction:column;gap:32px;
+}
+.content header h2{font-size:32px;font-weight:700;}
+
+.search-box{
+  position:relative;
+}
+.search-box input{
+  width:100%;padding:12px 42px 12px 40px;
+  border-radius:var(--radius);border:1px solid var(--grey-light);
+  background:var(--white);font-size:15px;
+}
+.search-box i{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  color:var(--grey);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:32px 24px;
+}
+.card{
+  cursor:pointer;user-select:none;
+  display:flex;flex-direction:column;gap:8px;
+}
+.card .thumb{
+  width:100%;padding-top:100%;position:relative;
+  border-radius:var(--radius);overflow:hidden;
+  background:#ffe; /* 占位背景 */
+}
+.card .thumb img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+}
+.card span{font-size:15px;}
+
+/* 详情面板 */
+.detail{
+  width:var(--detail-w);
+  padding:24px;
+  background:var(--white);
+  border-left:1px solid var(--grey-light);
+  display:flex;flex-direction:column;gap:24px;
+  transition:.3s;
+}
+.detail .preview{
+  width:100%;padding-top:66%;
+  position:relative;border-radius:var(--radius);overflow:hidden;
+}
+.detail .preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.detail h3{font-size:22px;font-weight:700;}
+.meta{display:flex;flex-direction:column;gap:14px;font-size:15px;}
+.meta div{display:flex;justify-content:space-between;}
+.detail button{
+  margin-top:auto;
+  background:var(--bg);border:none;border-radius:var(--radius);
+  padding:12px;font-size:15px;cursor:pointer;
+}
+.detail button:hover{background:var(--grey-light);}
+
+/* —— 响应式 —— */
+@media(max-width:900px){
+  .detail{
+    position:fixed;bottom:0;right:0;left:0;
+    max-height:70vh;
+    transform:translateY(100%);
+    border-left:none;border-top:1px solid var(--grey-light);
+  }
+  .detail.open{transform:translateY(0);}
+  .detail .closeBtn{
+    position:absolute;top:8px;right:12px;
+    background:none;border:none;font-size:22px;cursor:pointer;
+  }
+}
+
+@media(max-width:600px){
+  .sidebar{
+    width:64px;padding:24px 8px;
+  }
+  .sidebar h1{display:none;}
+  .nav a span{display:none;}
+}
+
+/* 简易滚动条 */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--grey-light);border-radius:3px}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- 侧边栏 -->
+  <aside class="sidebar">
+    <h1>StepCraft</h1>
+    <nav class="nav">
+      <ul>
+        <li><a href="#" :class="{active:currentMenu==='Home'}" @click="currentMenu='Home'"><i>🏠</i><span>Home</span></a></li>
+        <li><a href="#" :class="{active:currentMenu==='Library'}" @click="currentMenu='Library'"><i>📁</i><span>Library</span></a></li>
+        <li><a href="#"><i>📑</i><span>Templates</span></a></li>
+        <li><a href="#"><i>👥</i><span>Team</span></a></li>
+        <li><a href="#"><i>⚙️</i><span>Settings</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- 主内容 -->
+  <main class="content">
+    <header><h2>Projects</h2></header>
+
+    <!-- 搜索 -->
+    <div class="search-box">
+      <i>🔍</i>
+      <input type="text" placeholder="Search"
+             v-model="keyword">
+    </div>
+
+    <!-- 最近项目 -->
+    <section>
+      <h3 style="font-size:20px;margin-bottom:18px;">Recent Projects</h3>
+      <div class="grid">
+        <div class="card" v-for="proj in filtered" :key="proj.id"
+             @click="selectProject(proj)">
+          <div class="thumb">
+            <img :src="proj.image" :alt="proj.name"/>
+          </div>
+          <span>{{proj.name}}</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 详情 -->
+  <aside class="detail" :class="{open:detailOpen}">
+    <button class="closeBtn" @click="detailOpen=false" v-if="isMobile">✕</button>
+    <template v-if="current">
+      <h3>{{current.name}}</h3>
+      <div class="preview">
+        <img :src="current.image" :alt="current.name"/>
+      </div>
+      <div class="meta">
+        <div><span>Created</span><span>{{current.created}}</span></div>
+        <div><span>Last Edited</span><span>{{current.edited}}</span></div>
+        <div><span>Steps</span><span>{{current.steps}}</span></div>
+      </div>
+      <button @click="removeProject">Delete</button>
+    </template>
+    <template v-else>
+      <p style="color:var(--grey)">Select a project…</p>
+    </template>
+  </aside>
+</div>
+
+<script>
+const {createApp,computed,ref,onMounted} = Vue;
+
+createApp({
+  setup(){
+    const projects = ref([
+      {id:1,name:'Project Alpha',image:'https://picsum.photos/seed/alpha/400/400',
+        created:'2025.6.5',edited:'2025.6.9',steps:12},
+      {id:2,name:'Project Beta',image:'https://picsum.photos/seed/beta/400/400',
+        created:'2025.6.6',edited:'2025.6.9',steps:18},
+      {id:3,name:'Project Gamma',image:'https://picsum.photos/seed/gamma/400/400',
+        created:'2025.6.9',edited:'2025.6.10',steps:25},
+      {id:4,name:'Project Delta',image:'https://picsum.photos/seed/delta/400/400',
+        created:'2025.6.3',edited:'2025.6.8',steps:30},
+      {id:5,name:'Project Epsilon',image:'https://picsum.photos/seed/epsilon/400/400',
+        created:'2025.6.1',edited:'2025.6.5',steps:16},
+      {id:6,name:'Project Zeta',image:'https://picsum.photos/seed/zeta/400/400',
+        created:'2025.6.2',edited:'2025.6.4',steps:9}
+    ]);
+
+    const keyword = ref('');
+    const filtered = computed(()=> {
+      if(!keyword.value.trim()) return projects.value;
+      return projects.value.filter(p=>p.name.toLowerCase()
+                 .includes(keyword.value.trim().toLowerCase()));
+    });
+
+    const current = ref(null);
+    const detailOpen = ref(false);
+    const currentMenu = ref('Library');
+
+    const isMobile = ref(false);
+    const checkMobile = ()=>{isMobile.value = window.innerWidth<900};
+    onMounted(()=>{
+      checkMobile();
+      window.addEventListener('resize',checkMobile);
+    });
+
+    function selectProject(p){
+      current.value = p;
+      if(isMobile.value) detailOpen.value = true;
+    }
+    function removeProject(){
+      if(!current.value) return;
+      if(confirm(`Delete "${current.value.name}"?`)){
+        projects.value = projects.value.filter(x=>x.id!==current.value.id);
+        current.value = null;
+        detailOpen.value = false;
+      }
+    }
+
+    return {projects,keyword,filtered,current,selectProject,
+            removeProject,currentMenu,detailOpen,isMobile};
+  }
+}).mount('#app')
+</script>
+</body>
+</html>
