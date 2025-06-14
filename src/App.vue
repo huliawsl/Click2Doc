@@ -13,6 +13,7 @@ import Navigation from './components/Navigation.vue';
 .shell {
   display: flex;
   min-height: 100vh;
+  flex-direction:row;
 }
 
 .under {

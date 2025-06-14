@@ -18,6 +18,13 @@
   font-family: "Inter";
   src: url("./assets/fonts/Inter-Medium.otf");
   font-style: normal;
+  font-weight: 400;
+} 
+@font-face {
+  font-family: "Inter";
+  src: url("./assets/fonts/Inter-Bold.otf");
+  font-style: Bold;
+  font-weight: 700;
 } 
 
 a {
@@ -70,10 +77,6 @@ code {
 
 .card {
   padding: 2em;
-}
-
-#app {
-  max-width: 1280px;
 }
 
 @media (prefers-color-scheme: light) {
