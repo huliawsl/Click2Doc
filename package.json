@@ -25,6 +25,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@vitejs/plugin-vue": "^5.0.4",
     "animate.css": "^4.1.1",
     "electron": "^29.1.1",
@@ -39,7 +40,6 @@
     "wow.js": "^1.2.2"
   },
   "dependencies": {
-    "aos": "^2.3.4",
     "vue-router": "^4.5.1"
   }
 }

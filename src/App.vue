@@ -5,7 +5,9 @@ import Navigation from './components/Navigation.vue';
 <template>
   <div class="shell">
     <Navigation />
-    <router-view></router-view>
+    <transition name="fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -13,10 +15,16 @@ import Navigation from './components/Navigation.vue';
 .shell {
   display: flex;
   min-height: 100vh;
-  flex-direction:row;
+  flex-direction: row;
 }
 
-.under {
-  background: radial-gradient(50% 50% at 50% 50%, #121518 0%, #171b1f 100%);
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

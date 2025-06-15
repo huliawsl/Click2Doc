@@ -1,13 +1,10 @@
 <template>
-  lib
+    <div>
+        lib
+    </div>
 </template>
-
-<script>
-export default {
-
-}
+<script lang="ts" setup>
 </script>
-
-<style>
-
+<style lang="less">
+    
 </style>

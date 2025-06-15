@@ -22,7 +22,7 @@ const msg = ref('Create tutorials and guides effortlessly. Start a new project o
     .title {
         margin: 0 auto;
         margin-top: 72px;
-        height: 40px;
+        height: auto;
         font-size: 32px;
         font-weight: 700;
         line-height: 40px;
@@ -30,7 +30,8 @@ const msg = ref('Create tutorials and guides effortlessly. Start a new project o
 
     .msg {
         margin: 0 auto;
-        margin-top: 21px
+        margin-top: 21px;
+         padding: 0 20px;
     }
 
     .btn {
@@ -38,7 +39,8 @@ const msg = ref('Create tutorials and guides effortlessly. Start a new project o
         justify-content: center;
         gap: 41px;
         margin-top: 40px;
-
+        flex-wrap: wrap;
+         padding: 0 20px;
         button {
             width: 302px;
             height: 50px;
