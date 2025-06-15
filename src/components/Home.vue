@@ -41,7 +41,7 @@ const msg = ref('Create tutorials and guides effortlessly. Start a new project o
 
         button {
             width: 302px;
-            height: 62px;
+            height: 50px;
             border-radius: 20px;
         }
 

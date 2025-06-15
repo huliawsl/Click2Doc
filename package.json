@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "animate.css": "^4.1.1",
     "electron": "^29.1.1",
     "electron-builder": "^24.13.3",
     "less": "^4.3.0",
@@ -34,9 +35,11 @@
     "vite-plugin-electron": "^0.28.4",
     "vite-plugin-electron-renderer": "^0.14.5",
     "vue": "^3.4.21",
-    "vue-tsc": "^2.0.6"
+    "vue-tsc": "^2.0.6",
+    "wow.js": "^1.2.2"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "vue-router": "^4.5.1"
   }
 }

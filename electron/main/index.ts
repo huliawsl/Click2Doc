@@ -4,6 +4,11 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 
+// AOS animation
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+AOS.init()
+
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
