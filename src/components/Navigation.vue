@@ -41,9 +41,10 @@ const $route = useRoute();
 .navigation {
     padding-right: 20px;
     width: 320px;
+    min-width: 320px;
     background-color: #F7FAFC;
     border-right: 1px solid #cfd6e0;
-
+    transition:.3s;
     .title {
         margin: 36px 0 0 40px;
         font-size: 24px;
@@ -75,13 +76,37 @@ const $route = useRoute();
                 height: 40px;
                 line-height: 40px;
                 font-size: 14px;
-                display: inline-block;
                 text-align: center;
                 vertical-align: middle;
                 color: #373636;
-
             }
         }
     }
+}
+
+@media(max-width:660px) {
+    .navigation {
+        width: 60px;
+        min-width: 60px;
+        padding-right: 5px;
+        .title {
+            display: none;
+        }
+
+        ul {
+            margin: 36px 0 0 5px;
+            li {
+                img {
+                    margin-top: 8px;
+                }
+            }
+        }
+
+        span {
+            display: none;
+        }
+    }
+
+
 }
 </style>
