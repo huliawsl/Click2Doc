@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import Navigation from './components/Navigation.vue';
+import { useRoute } from 'vue-router'
+import Navigation from './components/start/Navigation.vue';
+
+const route = useRoute()
 </script>
 
 <template>
   <div class="shell">
-    <Navigation />
+    <Navigation v-if="route.meta.showNavigation !== false" />
     <transition name="fade">
       <router-view></router-view>
     </transition>

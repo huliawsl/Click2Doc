@@ -3,16 +3,21 @@
         <h1 class="title">Welcome to StepCraft</h1>
         <div class="msg">{{ msg }}</div>
         <div class="btn">
-            <button class="new">Create a step record</button>
+        <button class="new" @click="createNewRecord">Create a step record</button>
             <button class="open">Open a step record</button>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const msg = ref('Create tutorials and guides effortlessly. Start a new project or open an existing one to begin.')
+const router = useRouter()
 
+const createNewRecord = () => {
+  router.push('/edit')
+}
 </script>
 <style lang="less">
 .home {

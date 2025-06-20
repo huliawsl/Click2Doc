@@ -1,8 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import Home from './components/Home.vue';
-import Lib from './components/Lib.vue';
-import Templates from './components/Templates.vue';
-import Settings from './components/Settings.vue';
+import Home from './components/start/Home.vue';
+import Lib from './components/start/Lib.vue';
+import Templates from './components/start/Templates.vue';
+import Settings from './components/start/Settings.vue';
+import Edit from './components/edit/Edit.vue';
 
 
 const router = createRouter({
@@ -11,7 +12,13 @@ const router = createRouter({
     { path: '/', name: 'Home', component: Home },
     { path: '/library', name: 'Lib', component: Lib },
     { path: '/templates', name: 'Templates', component: Templates },
-    { path: '/settings', name: 'Settings', component: Settings }
+    { path: '/settings', name: 'Settings', component: Settings },
+    { 
+      path: '/edit', 
+      name: 'Edit', 
+      component: Edit,
+      meta: { showNavigation: false }
+    }
   ]
 });
 
