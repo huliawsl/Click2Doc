@@ -23,6 +23,55 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // ...
 })
 
+// Expose global recording APIs
+contextBridge.exposeInMainWorld('globalRecorder', {
+  startRecording: () => ipcRenderer.invoke('start-global-recording'),
+  stopRecording: () => ipcRenderer.invoke('stop-global-recording'),
+  captureScreen: () => ipcRenderer.invoke('capture-screen'),
+  getActiveWindowInfo: () => ipcRenderer.invoke('get-active-window-info'),
+
+  // Event listeners
+  onEventCaptured: (callback: (event: any) => void) => {
+    ipcRenderer.on('global-event-captured', (_, event) => callback(event))
+  },
+
+  removeEventListeners: () => {
+    ipcRenderer.removeAllListeners('global-event-captured')
+  }
+})
+
+// Expose enhanced screen capture APIs
+contextBridge.exposeInMainWorld('screenCapture', {
+  captureScreen: (options?: any) => ipcRenderer.invoke('capture-screen-enhanced', options),
+  captureWindow: (windowId?: number) => ipcRenderer.invoke('capture-window', windowId),
+  captureRegion: (region: { x: number; y: number; width: number; height: number }) =>
+    ipcRenderer.invoke('capture-region', region),
+  getSources: () => ipcRenderer.invoke('get-capture-sources'),
+
+  // Quality presets
+  captureHighQuality: () => ipcRenderer.invoke('capture-screen-enhanced', {
+    quality: 'ultra',
+    format: 'png'
+  }),
+  captureLowQuality: () => ipcRenderer.invoke('capture-screen-enhanced', {
+    quality: 'low',
+    format: 'jpeg'
+  })
+})
+
+// Expose context collection APIs
+contextBridge.exposeInMainWorld('contextCollector', {
+  getWindowContext: () => ipcRenderer.invoke('get-window-context'),
+  getSystemContext: () => ipcRenderer.invoke('get-system-context'),
+  getFullContext: (userAction: any) => ipcRenderer.invoke('get-full-context', userAction)
+})
+
+// Expose file system APIs
+contextBridge.exposeInMainWorld('electronAPI', {
+  showSaveDialog: (options: any) => ipcRenderer.invoke('show-save-dialog', options),
+  writeFile: (filePath: string, content: string) => ipcRenderer.invoke('write-file', filePath, content)
+})
+
 // --------- Preload scripts loading ---------
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
   return new Promise((resolve) => {

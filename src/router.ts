@@ -13,9 +13,9 @@ const router = createRouter({
     { path: '/library', name: 'Lib', component: Lib },
     { path: '/templates', name: 'Templates', component: Templates },
     { path: '/settings', name: 'Settings', component: Settings },
-    { 
-      path: '/edit', 
-      name: 'Edit', 
+    {
+      path: '/edit',
+      name: 'Edit',
       component: Edit,
       meta: { showNavigation: false }
     }
